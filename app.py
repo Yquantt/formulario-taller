@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Conexión a Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("taller-service-account.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("tallerform-e4aaf35feead.json", scope)
 client = gspread.authorize(creds)
 sheet = client.open("Registro Taller").sheet1  # Usa el nombre exacto de tu hoja
 
