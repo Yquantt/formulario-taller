@@ -1,10 +1,15 @@
 from flask import Flask, request, redirect, render_template
-import pandas as pd
 from datetime import datetime
-import os
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 app = Flask(__name__)
-ARCHIVO_EXCEL = "registro_taller.xlsx"
+
+# Conexión a Google Sheets
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name("taller-service-account.json", scope)
+client = gspread.authorize(creds)
+sheet = client.open("Registro Taller").sheet1  # Usa el nombre exacto de tu hoja
 
 @app.route('/')
 def index():
@@ -24,16 +29,14 @@ def guardar():
         "Mecanico": request.form['mecanico']
     }
 
-    if os.path.exists(ARCHIVO_EXCEL):
-        df = pd.read_excel(ARCHIVO_EXCEL)
-        df = pd.concat([df, pd.DataFrame([datos])], ignore_index=True)
-    else:
-        df = pd.DataFrame([datos])
+    # Agregar fila a Google Sheets
+    fila = list(datos.values())
+    sheet.append_row(fila)
 
-    df.to_excel(ARCHIVO_EXCEL, index=False)
     return redirect('/')
 
 if __name__ == '__main__':
-    # ✅ Esto es necesario para que funcione en Render
+    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+
