@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ingreso Vehículo - Taller</title>
+</head>
+<body>
+  <h2>Formulario de Ingreso al Taller</h2>
+  <form action="/guardar" method="POST">
+    <label>Marca y Modelo:</label><input name="modelo"><br>
+    <label>Patente:</label><input name="patente"><br>
+    <label>Año:</label><input name="anio"><br>
+    <label>Color:</label><input name="color"><br>
+    <label>Kilometraje:</label><input name="km"><br>
+
+    <h3>Checklist</h3>
+    <label><input type="checkbox" name="checklist" value="Carrocería OK"> Carrocería OK</label><br>
+    <label><input type="checkbox" name="checklist" value="Luces OK"> Luces OK</label><br>
+    <label><input type="checkbox" name="checklist" value="Batería OK"> Batería OK</label><br>
+
+    <label>Observaciones:</label><br>
+    <textarea name="observaciones"></textarea><br>
+
+    <label>Mecánico:</label><input name="mecanico"><br>
+
+    <button type="submit">Guardar</button>
+  </form>
+</body>
+</html>
